@@ -1,0 +1,38 @@
+#!/usr/bin/env zsh
+
+# Usage: chat --help
+# Requires: cat, curl, jq
+
+PROMPT="${1}"
+
+case "${PROMPT}" in
+    "-h" | "--help")
+        echo "usage: chat <prompt>"
+        echo "\nUse prompt to provide the agent with text."
+        echo "\nText can also be piped to the agent for the prompt."
+        echo "   $ echo 'code a factorial method in Ruby' | chat"
+        exit 0
+        ;;
+    "")
+        if [[ -p /dev/stdin ]]; then
+            PROMPT=$(cat)
+        else
+            echo "chat: 'requires text for prompt. See 'chat --help'."
+            exit 2
+        fi
+        ;;
+esac
+
+curl -s -N \
+  --location 'https://codestral.mistral.ai/v1/chat/completions' \
+  --header 'Content-Type: application/json' \
+  --header 'Accept: application/json' \
+  --header "Authorization: Bearer $CODESTRAL_API_KEY" \
+  --data "{
+  \"model\": \"codestral-latest\",
+  \"stream\": true,
+  \"messages\": [
+    {\"role\": \"user\", \"content\": $(printf %s ${PROMPT} | jq -Rs '.')}
+  ]
+}" | jq --stream -Rrj \
+        'match("data: (.*)")|.captures[0].string|select(test("DONE")|not)|fromjson|.choices[0].delta.content'

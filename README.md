@@ -1,13 +1,13 @@
-# fim
+# agent
 
-fim is a zshell script (`fim`) for interfacing with Mistral's [Codestral](https://mistral.ai/news/codestral-2501) for FIM completion.
+agent is a set of zshell script (`chat` and `fim`) for interfacing with Mistral's [Codestral](https://mistral.ai/news/codestral-2501) both chat and fill in the middle code completion.
 
 ## Installation
 
 After running the requirements, use the `Makefile`
 
-    $ git clone https://github.com/keegnotrub/fim
-    $ cd fim
+    $ git clone https://github.com/keegnotrub/agent
+    $ cd agent
     $ sudo make install
 
 ## Requirements
@@ -24,6 +24,15 @@ Install the needed binaries in your package manager of choice.
 
     # Homebrew
     $ brew install jq
+
+## Usage `chat`
+    
+    $ chat <prompt>
+
+    Use prompt to provide the agent with text.
+
+    Text can also be piped to the agent for the prompt.
+    $ echo 'code a factorial method in Ruby' | chat
 
 ## Usage `fim`
     
