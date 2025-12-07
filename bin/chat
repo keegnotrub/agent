@@ -23,6 +23,8 @@ case "${PROMPT}" in
         ;;
 esac
 
+printf "🧑‍💻: %s\n\n🤖: " ${PROMPT}
+
 curl -s -N \
   --location 'https://codestral.mistral.ai/v1/chat/completions' \
   --header 'Content-Type: application/json' \
