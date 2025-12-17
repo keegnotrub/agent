@@ -1,6 +1,6 @@
 # agent
 
-agent is a set of zshell scripts (`chat` and `fim`) for interfacing with Mistral's [Codestral](https://mistral.ai/news/codestral-25-08) for both chat and fill in the middle code completion.
+agent is a set of zshell scripts (`chat` and `fim`) for interfacing with Mistral's [Codestral](https://mistral.ai/news/codestral) for both chat and fill in the middle code completion.
 
 ## Installation
 
@@ -12,18 +12,23 @@ After running the requirements, use the `Makefile`
 
 ## Requirements
 
-Login to Mistral's [La Plateforme](https://console.mistral.ai/codestral) and setup an API key from the "Codestral" page.
-
-    $ open https://console.mistral.ai/codestral
-    $ echo 'export CODESTRAL_API_KEY="your_api_key"' >> $HOME/.zprofile
-    
 Install the needed binaries in your package manager of choice.
 
     # Macports
-    $ sudo port install jq
+    $ sudo port install jq ollama
 
     # Homebrew
-    $ brew install jq
+    $ brew install jq ollama
+    
+Setup Ollama to serve codestral
+
+    $ ollama pull codestral
+
+    # Macports
+    $ sudo port load ollama
+
+    # Homebrew
+    $ brew services start ollama
 
 ## Usage `chat`
     

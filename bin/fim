@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Usage: fim --help
-# Requires: read, cat, curl, jq
+# Requires: cat, curl, jq, printf, read
 
 CURSOR="${1}"
 
@@ -28,15 +28,23 @@ else
 fi
 
 curl -s -N \
-  --location 'https://codestral.mistral.ai/v1/fim/completions' \
+  --location 'http://localhost:11434/api/generate' \
   --header 'Content-Type: application/json' \
   --header 'Accept: application/json' \
-  --header "Authorization: Bearer $CODESTRAL_API_KEY" \
   --data "{
-  \"model\": \"codestral-latest\",
+  \"model\": \"codestral\",
   \"stream\": true,
   \"prompt\": $(printf %s ${PROMPT} | jq -Rs '.'),
   \"suffix\": $(printf %s ${SUFFIX} | jq -Rs '.'),
-  \"stop\": [\"\\n\\n\"]
-}" | jq --stream -Rrj \
-        'match("data: (.*)")|.captures[0].string|select(test("DONE")|not)|fromjson|.choices[0].delta.content'
+  \"options\": {
+    \"temperature\": 0,
+    \"stop\": [
+      \"\\n\\n\",
+      \"\\nend\",
+      \"\\n  end\",
+      \"\\n    end\",
+      \"\\n      end\"
+    ]
+  }
+}" | jq --unbuffered -Rrj \
+        'fromjson|.response|if input_line_number == 1 then ltrimstr(" ") else . end'
