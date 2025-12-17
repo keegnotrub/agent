@@ -1,6 +1,6 @@
 # agent
 
-agent is a set of zshell scripts (`chat` and `fim`) for interfacing with Mistral's [Codestral](https://mistral.ai/news/codestral) for both chat and fill in the middle code completion.
+agent is a set of zshell scripts (`chat` and `fim`) for interfacing with Mistral's [Codestral](https://mistral.ai/news/codestral) locally for both chat and fill in the middle code completion.
 
 ## Installation
 
