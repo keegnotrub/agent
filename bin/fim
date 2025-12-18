@@ -6,12 +6,16 @@
 CURSOR="${1}"
 
 case "${CURSOR}" in
-    "" | "-h" | "--help")
+    "-h" | "--help")
         echo "usage: fim <cursor>"
         echo "\nUse cursor to provide the position for completion within text."
         echo "\nText should be piped to fim for completion."
         echo "   $ cat app/models/user.rb | fim 732"
         exit 0
+        ;;
+    "")
+        echo "fim: requires cursor for completion. See 'fim --help'."
+        exit 2
         ;;
     *[!0-9]*)
         echo "fim: '${CURSOR}' is not a fim cursor. See 'fim --help'."
@@ -23,7 +27,7 @@ if [[ ! -t 0 ]]; then
     read -u 0 -k $CURSOR PROMPT
     SUFFIX=$(cat)
 else
-    echo "fim: 'requires text piped for completion. See 'fim --help'."
+    echo "fim: requires text piped for completion. See 'fim --help'."
     exit 2
 fi
 

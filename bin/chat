@@ -17,7 +17,7 @@ case "${PROMPT}" in
         if [[ ! -t 0 ]]; then
             PROMPT=$(cat)
         else
-            echo "chat: 'requires text for prompt. See 'chat --help'."
+            echo "chat: requires text for prompt. See 'chat --help'."
             exit 2
         fi
         ;;
