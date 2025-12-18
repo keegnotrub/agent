@@ -19,7 +19,7 @@ case "${CURSOR}" in
         ;;
 esac
 
-if [[ -p /dev/stdin ]]; then
+if [[ ! -t 0 ]]; then
     read -u 0 -k $CURSOR PROMPT
     SUFFIX=$(cat)
 else
