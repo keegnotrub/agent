@@ -30,7 +30,7 @@ curl -s -N \
   --header 'Content-Type: application/json' \
   --header 'Accept: application/json' \
   --data "{
-  \"model\": \"codestral\",
+  \"model\": \"qwen2.5-coder\",
   \"stream\": true,
   \"prompt\": $(printf %s ${PROMPT} | jq -Rs '.')
 }" | jq --unbuffered -Rrj \
